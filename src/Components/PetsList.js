@@ -3,7 +3,11 @@ import PetItem from "./PetItem";
 import { useState } from "react";
 function PetsList() {
   const [query, setQuery] = useState("")
-
+  const [type, setType] = useState("")
+  const petSelector = (e)=>{
+    setType(e.target.value)
+  }
+  
   const getSearched=(event)=>{
     setQuery(event.target.value)}
 
@@ -11,7 +15,10 @@ function PetsList() {
     if(pet.name.toLowerCase
       ().includes(query.toLowerCase())){
 return true
-    }}).map((pet) => <PetItem pet={pet} key={pet.id} />);
+    }}).filter((pet)=>{
+      if(pet.type.toLowerCase().includes(type.toLowerCase())){
+        return true
+      }}).map((pet) => <PetItem pet={pet} key={pet.id} />);
    
   
   
@@ -36,7 +43,7 @@ return true
               </div>
               <br />
               Type:
-              <select className="form-select">
+              <select className="form-select" onChange={petSelector}>
                 <option value="" selected>
                   All
                 </option>
